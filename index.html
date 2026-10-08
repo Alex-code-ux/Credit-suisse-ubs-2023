@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Credit Suisse и UBS: слияние 2023</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700;800&family=Unbounded:wght@300;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070b16; --bg2:#0c1326; --card:rgba(255,255,255,.045); --line:rgba(255,255,255,.1);
+  --txt:#e9edf7; --mute:#8f9bb8; --cs:#3d8bff; --cs2:#7cc0ff; --ubs:#ff2d3d; --ubs2:#ff8a8f;
+  --gold:#f3c969; --green:#3fe0a5; --violet:#a78bfa;
+  --hf:'Unbounded','Manrope',sans-serif; --bf:'Manrope',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-snap-type:y proximity}
+body{background:var(--bg);color:var(--txt);font-family:var(--bf);font-size:18px;line-height:1.6;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;z-index:-1;
+  background:radial-gradient(1000px 600px at 12% 8%,rgba(61,139,255,.16),transparent 60%),
+             radial-gradient(900px 600px at 90% 90%,rgba(255,45,61,.13),transparent 60%),var(--bg)}
+section{min-height:100vh;padding:110px 7vw 90px;position:relative;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.wrap{max-width:1200px;margin:0 auto;width:100%}
+svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* typography */
+.kicker{font-family:var(--hf);font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.kicker::before{content:"";width:46px;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+h2{font-family:var(--hf);font-weight:700;font-size:clamp(30px,4.6vw,62px);line-height:1.08;letter-spacing:-.02em;margin-bottom:18px}
+h2 em{font-style:normal;background:linear-gradient(90deg,var(--cs2),var(--ubs2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:clamp(17px,1.5vw,22px);color:var(--mute);max-width:760px;font-weight:300}
+.lead b{color:var(--txt);font-weight:700}
+h3{font-family:var(--hf);font-weight:500;font-size:19px;line-height:1.25;margin-bottom:8px}
+.src{display:inline-block;font-size:11px;color:var(--mute);border:1px solid var(--line);padding:1px 8px;border-radius:99px;margin-top:10px;letter-spacing:.04em}
+.hl{color:var(--gold)} .blue{color:var(--cs2)} .red{color:var(--ubs2)} .grn{color:var(--green)}
+
+/* generic card */
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px;backdrop-filter:blur(10px);position:relative;transition:border-color .3s,box-shadow .3s}
+.card:hover{border-color:rgba(255,255,255,.28);box-shadow:0 20px 60px -20px rgba(0,0,0,.7)}
+.tilt{transform-style:preserve-3d;will-change:transform}
+.ico{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font-size:28px;margin-bottom:16px}
+.ico.b{background:rgba(61,139,255,.15);color:var(--cs2)} .ico.r{background:rgba(255,45,61,.15);color:var(--ubs2)}
+.ico.g{background:rgba(243,201,105,.15);color:var(--gold)} .ico.v{background:rgba(167,139,250,.15);color:var(--violet)}
+.ico.n{background:rgba(63,224,165,.15);color:var(--green)}
+.big{font-family:var(--hf);font-weight:900;font-size:clamp(34px,4vw,54px);line-height:1;letter-spacing:-.03em;margin-bottom:6px}
+.grid{display:grid;gap:22px}
+.g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+.extra{margin-top:34px;border:1px dashed rgba(243,201,105,.55);background:linear-gradient(135deg,rgba(243,201,105,.09),rgba(243,201,105,.02));border-radius:20px;padding:22px 26px;display:flex;gap:18px;align-items:flex-start}
+.extra .tag{font-family:var(--hf);font-size:10px;letter-spacing:.2em;color:#1a1403;background:var(--gold);padding:5px 10px;border-radius:8px;white-space:nowrap;margin-top:3px}
+.extra p{font-size:16px;color:#d9dcea}.extra b{color:var(--gold)}
+.verdict{margin-top:34px;padding:26px 32px;border-radius:22px;background:linear-gradient(100deg,rgba(61,139,255,.2),rgba(255,45,61,.2));border:1px solid var(--line);display:flex;gap:20px;align-items:center;font-size:clamp(17px,1.6vw,22px);font-weight:500}
+.verdict .i{font-size:40px;color:var(--gold)}
+.verdict b{font-family:var(--hf);font-weight:700}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(34px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+.rv.l{transform:translateX(-50px)} .rv.r{transform:translateX(50px)} .rv.z{transform:scale(.88)}
+
+/* progress + nav */
+#bar{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;background:linear-gradient(90deg,var(--cs),var(--gold),var(--ubs))}
+#dots{position:fixed;right:20px;top:50%;transform:translateY(-50%);z-index:90;display:flex;flex-direction:column;gap:12px}
+#dots a{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--mute);position:relative;transition:.3s;display:block}
+#dots a.on{background:var(--gold);border-color:var(--gold);transform:scale(1.35);box-shadow:0 0 14px var(--gold)}
+#dots a span{position:absolute;right:22px;top:50%;transform:translateY(-50%);white-space:nowrap;font-size:12px;background:#000c;padding:3px 10px;border-radius:8px;opacity:0;pointer-events:none;transition:.25s}
+#dots a:hover span{opacity:1}
+#hint{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:80;font-size:12px;color:var(--mute);background:#0009;padding:6px 14px;border-radius:99px;border:1px solid var(--line);transition:opacity .5s}
+#cnt{position:fixed;left:22px;bottom:18px;font-family:var(--hf);font-size:12px;color:var(--mute);z-index:80;letter-spacing:.1em}
+#cnt b{color:var(--gold);font-size:16px}
+
+/* HERO */
+#hero{text-align:center;align-items:center;padding-bottom:0}
+.orbs{position:absolute;inset:0;pointer-events:none}
+.orb{position:absolute;top:36%;width:46vmin;height:46vmin;border-radius:50%;filter:blur(8px);mix-blend-mode:screen;opacity:.8}
+.orb.o1{left:50%;background:radial-gradient(circle at 35% 35%,#7cc0ff,#1d5fd6 55%,transparent 72%);animation:m1 9s ease-in-out infinite alternate}
+.orb.o2{left:50%;background:radial-gradient(circle at 65% 35%,#ff8a8f,#d4101f 55%,transparent 72%);animation:m2 9s ease-in-out infinite alternate}
+@keyframes m1{from{transform:translate(-125%,-20%)}to{transform:translate(-62%,-20%)}}
+@keyframes m2{from{transform:translate(25%,-20%)}to{transform:translate(-38%,-20%)}}
+.badge{display:inline-flex;gap:10px;align-items:center;border:1px solid var(--line);background:#ffffff0d;padding:9px 20px;border-radius:99px;font-size:14px;letter-spacing:.08em;margin-bottom:30px;backdrop-filter:blur(8px)}
+.badge .dot{width:8px;height:8px;border-radius:50%;background:var(--ubs);box-shadow:0 0 12px var(--ubs);animation:pl 1.6s infinite}
+@keyframes pl{50%{opacity:.3}}
+#hero h1{font-family:var(--hf);font-weight:900;font-size:clamp(40px,8.2vw,122px);line-height:.95;letter-spacing:-.045em;position:relative}
+#hero h1 .cs{background:linear-gradient(180deg,#fff,var(--cs2) 55%,var(--cs));-webkit-background-clip:text;background-clip:text;color:transparent}
+#hero h1 .ubs{background:linear-gradient(180deg,#fff,var(--ubs2) 55%,var(--ubs));-webkit-background-clip:text;background-clip:text;color:transparent}
+#hero h1 .x{display:block;font-size:.34em;font-weight:300;color:var(--gold);letter-spacing:.3em;margin:.35em 0}
+#hero p.sub{font-size:clamp(17px,2vw,26px);color:#c8d0e6;font-weight:300;margin-top:30px;max-width:780px;position:relative}
+#hero .who{margin-top:24px;font-size:15px;color:var(--mute);position:relative;letter-spacing:.06em}
+#hero .who b{color:var(--txt)}
+#sky{position:absolute;left:0;right:0;bottom:0;width:100%;height:210px;opacity:.9;pointer-events:none}
+.scrolldown{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);width:26px;height:44px;border:2px solid var(--mute);border-radius:14px;z-index:3}
+.scrolldown::after{content:"";position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--gold);animation:sd 1.8s infinite}
+@keyframes sd{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(16px)}}
+
+/* CONTEXT */
+.duel{display:grid;grid-template-columns:1fr 90px 1fr;gap:20px;align-items:stretch;margin-top:40px}
+.duel .card{padding:34px;overflow:hidden}
+.duel .card .yr{font-family:var(--hf);font-weight:900;font-size:clamp(50px,7vw,96px);line-height:1;letter-spacing:-.05em;opacity:.95}
+.duel .cs-c{border-color:rgba(61,139,255,.45);background:linear-gradient(160deg,rgba(61,139,255,.2),rgba(61,139,255,.03))}
+.duel .ubs-c{border-color:rgba(255,45,61,.45);background:linear-gradient(160deg,rgba(255,45,61,.2),rgba(255,45,61,.03))}
+.duel .cs-c .yr{color:var(--cs2)} .duel .ubs-c .yr{color:var(--ubs2)}
+.duel .mid{display:grid;place-items:center;font-size:44px;color:var(--gold)}
+.duel .mid svg{animation:nudge 1.8s infinite ease-in-out}
+@keyframes nudge{50%{transform:translateX(8px)}}
+.duel h3{margin-top:10px}.duel p{color:#b9c2db;font-size:16px}
+.mini{display:flex;gap:30px;margin-top:34px;flex-wrap:wrap}
+.mini div{flex:1;min-width:200px;padding:20px 24px;border-left:3px solid var(--gold);background:var(--card);border-radius:0 18px 18px 0}
+.mini .big{font-size:36px}
+
+/* CAUSES */
+.cause .num{position:absolute;right:22px;top:14px;font-family:var(--hf);font-weight:900;font-size:68px;color:rgba(255,255,255,.05);line-height:1}
+.cause p{font-size:15.5px;color:#b9c2db;line-height:1.55}
+.cause .big{font-size:40px}
+.trust{margin-top:34px;padding:26px 30px;border-radius:22px;border:1px solid var(--line);background:var(--card)}
+.trust .row{display:flex;justify-content:space-between;font-size:14px;color:var(--mute);margin-bottom:10px;letter-spacing:.04em}
+.trust .track{height:20px;border-radius:99px;background:#ffffff10;overflow:hidden}
+.trust .fill{height:100%;width:100%;border-radius:99px;background:linear-gradient(90deg,var(--ubs),var(--gold) 50%,var(--green));transition:width 3.4s cubic-bezier(.5,0,.2,1) .4s;box-shadow:0 0 22px rgba(255,255,255,.2)}
+.trust.in .fill{width:9%}
+.trust.in .fill{background:linear-gradient(90deg,var(--ubs),#ff6a3d)}
+
+/* TIMELINE */
+.tl{position:relative;margin-top:50px;--p:0}
+.tl::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:3px;background:var(--line);transform:translateX(-50%)}
+.tl::after{content:"";position:absolute;left:50%;top:0;height:calc(var(--p)*100%);width:3px;background:linear-gradient(var(--cs),var(--gold),var(--ubs));transform:translateX(-50%);box-shadow:0 0 18px var(--gold)}
+.ti{display:grid;grid-template-columns:1fr 70px 1fr;margin-bottom:26px;align-items:center}
+.ti .card{padding:20px 24px}
+.ti .d{font-family:var(--hf);font-weight:700;font-size:13px;color:var(--gold);letter-spacing:.1em;margin-bottom:6px}
+.ti p{font-size:15.5px;color:#cbd2e6;line-height:1.5}
+.ti .eff{margin-top:10px;font-size:14px;font-weight:700;display:flex;gap:8px;align-items:center}
+.ti .node{grid-column:2;width:22px;height:22px;border-radius:50%;margin:0 auto;background:var(--bg);border:3px solid var(--gold);z-index:2;box-shadow:0 0 0 6px rgba(243,201,105,.14);position:relative}
+.ti.crit .node{border-color:var(--ubs);box-shadow:0 0 0 6px rgba(255,45,61,.2),0 0 24px var(--ubs)}
+.ti.L .card{grid-column:1;grid-row:1;text-align:right} .ti.L .eff{justify-content:flex-end}
+.ti.R .card{grid-column:3;grid-row:1}
+.ti .node{grid-row:1}
+.chartbox{margin-top:50px;display:grid;grid-template-columns:1.35fr 1fr;gap:22px}
+.chartbox svg{width:100%;height:auto;display:block}
+.drops{display:flex;flex-direction:column;gap:14px;justify-content:center}
+.drop{display:flex;align-items:center;gap:16px}
+.drop .v{font-family:var(--hf);font-weight:900;font-size:34px;color:var(--ubs2);min-width:116px}
+.drop .t{font-size:14.5px;color:#b9c2db;line-height:1.35}
+.path{stroke-dasharray:1200;stroke-dashoffset:1200;transition:stroke-dashoffset 3s ease-out .3s}
+.in .path{stroke-dashoffset:0}
+
+/* DEAL */
+.hugs{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
+.hug{padding:30px;border-radius:26px;border:1px solid var(--line);position:relative;overflow:hidden;background:var(--card)}
+.hug::after{content:"";position:absolute;right:-60px;top:-60px;width:180px;height:180px;border-radius:50%;filter:blur(30px);opacity:.35}
+.hug.a::after{background:var(--gold)}.hug.b::after{background:var(--cs)}.hug.c::after{background:var(--ubs)}
+.hug .big{font-size:clamp(46px,5.4vw,80px)}
+.hug small{font-size:.38em;font-weight:500;letter-spacing:0;margin-left:6px;color:var(--mute)}
+.hug p{color:#b9c2db;font-size:15.5px}
+.bubbles{margin-top:30px;padding:26px;border-radius:26px;border:1px solid var(--line);background:var(--card)}
+.bubbles svg{width:100%;height:auto;display:block;overflow:visible}
+.bub{transform-box:fill-box;transform-origin:50% 100%;transform:scale(0);transition:transform 1.1s cubic-bezier(.2,1.3,.4,1)}
+.in .bub{transform:scale(1)}
+.hier{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:30px}
+.hier .card{display:flex;gap:18px;align-items:center;padding:24px 28px}
+.hier .mark{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-size:34px;flex:none}
+.hier .ok{border-color:rgba(63,224,165,.4)} .hier .ok .mark{background:rgba(63,224,165,.15);color:var(--green)}
+.hier .no{border-color:rgba(255,45,61,.45)} .hier .no .mark{background:rgba(255,45,61,.15);color:var(--ubs2)}
+.hier b{font-family:var(--hf);font-size:20px;display:block;margin-bottom:4px}
+.hier span{font-size:15px;color:#b9c2db}
+.weekend{display:flex;gap:0;margin-top:30px;border-radius:20px;overflow:hidden;border:1px solid var(--line)}
+.weekend div{flex:1;padding:18px 22px;background:var(--card);border-right:1px solid var(--line);font-size:14.5px;color:#b9c2db}
+.weekend div:last-child{border:0}
+.weekend b{display:block;font-family:var(--hf);color:var(--gold);font-size:13px;letter-spacing:.1em;margin-bottom:4px}
+
+/* WHY */
+.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:44px}
+.pillar{padding:38px 30px 30px;border-radius:28px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.015));position:relative;overflow:hidden}
+.pillar .n{position:absolute;right:16px;top:-8px;font-family:var(--hf);font-weight:900;font-size:130px;color:rgba(255,255,255,.04);line-height:1}
+.pillar .ico{width:70px;height:70px;font-size:38px;border-radius:22px}
+.pillar p{color:#b9c2db;font-size:16px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.chips span{font-size:12px;padding:4px 12px;border-radius:99px;background:#ffffff12;border:1px solid var(--line);color:var(--cs2);letter-spacing:.05em}
+
+/* REACTION */
+.react{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:40px;align-items:start}
+.flow{padding:20px}
+.flow svg{width:100%;height:auto;display:block}
+.chan{display:flex;gap:16px;padding:16px 4px;border-bottom:1px solid var(--line);align-items:flex-start}
+.chan:last-child{border:0}
+.chan .ico{width:46px;height:46px;font-size:24px;margin:0;border-radius:14px}
+.chan h3{font-size:16px;margin-bottom:3px}
+.chan p{font-size:14.5px;color:#b9c2db;line-height:1.45}
+.chan .m{font-family:var(--hf);font-size:12px;color:var(--gold);margin-top:5px;display:block}
+.bars{margin-top:30px;padding:26px 30px}
+.brow{display:grid;grid-template-columns:200px 1fr 70px;gap:16px;align-items:center;margin:14px 0;font-size:15px}
+.brow .tr{height:16px;border-radius:99px;background:#ffffff10;overflow:hidden}
+.brow .fl{height:100%;width:0;border-radius:99px;transition:width 1.8s cubic-bezier(.2,.8,.2,1) .3s}
+.brow b{font-family:var(--hf);text-align:right;font-size:16px}
+.dash{stroke-dasharray:6 8;animation:dash 1.2s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-14}}
+.pulse{transform-box:fill-box;transform-origin:center;animation:pu 2.4s ease-out infinite}
+@keyframes pu{0%{transform:scale(1);opacity:.6}100%{transform:scale(2.6);opacity:0}}
+
+/* RESULTS */
+.res{display:grid;grid-template-columns:1.2fr 1fr;gap:26px;margin-top:40px;align-items:start}
+.rrow{display:grid;grid-template-columns:150px 1fr 40px 1.2fr;gap:14px;align-items:center;padding:16px 22px;margin-bottom:12px}
+.rrow .th{font-family:var(--hf);font-size:13px;font-weight:500;color:var(--gold)}
+.rrow .was{font-size:14px;color:var(--mute)}
+.rrow .now{font-size:14.5px;color:#e4e9f6;font-weight:500}
+.rrow .ar{color:var(--gold);font-size:24px;text-align:center}
+.side{display:flex;flex-direction:column;gap:22px}
+.ringbox{display:flex;align-items:center;gap:26px}
+.ring{width:150px;height:150px;flex:none}
+.ring circle{fill:none;stroke-width:12;stroke-linecap:round}
+.ring .bgc{stroke:#ffffff14}
+.ring .fg{stroke:url(#rg);stroke-dasharray:339.3;stroke-dashoffset:339.3;transition:stroke-dashoffset 2.4s cubic-bezier(.3,.7,.2,1) .3s;transform:rotate(-90deg);transform-origin:center}
+.in .ring .fg{stroke-dashoffset:23.8}
+.ring text{fill:#fff;font-family:var(--hf);font-weight:900;font-size:30px;text-anchor:middle}
+.stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.stats3 .card{padding:18px;text-align:center}
+.stats3 .big{font-size:28px}
+.stats3 small{font-size:12.5px;color:var(--mute);line-height:1.3;display:block}
+.court{display:flex;flex-direction:column;gap:0;margin-top:6px}
+.court div{position:relative;padding:0 0 18px 28px;font-size:14.5px;color:#b9c2db;border-left:2px solid var(--line);margin-left:6px}
+.court div:last-child{padding-bottom:0;border-color:transparent}
+.court div::before{content:"";position:absolute;left:-7px;top:5px;width:12px;height:12px;border-radius:50%;background:var(--gold)}
+.court b{color:#fff;display:block;font-family:var(--hf);font-size:13px;letter-spacing:.05em}
+.cap{display:flex;gap:6px;height:30px;margin-top:12px}
+.cap i{flex:1;border-radius:6px;background:#ffffff14}
+.cap i.on{background:linear-gradient(135deg,var(--cs),var(--cs2))}
+
+/* CONCLUSION */
+.concl .card{padding:34px 30px}
+.concl p{font-size:16px;color:#c0c8df}
+.finale{margin-top:44px;text-align:center;padding:50px 20px 20px}
+.finale .path3{display:flex;justify-content:center;align-items:center;gap:18px;flex-wrap:wrap;font-family:var(--hf);font-weight:700;font-size:clamp(14px,1.8vw,22px)}
+.finale .path3 span{padding:12px 22px;border-radius:99px;border:1px solid var(--line);background:var(--card)}
+.finale .path3 .i{color:var(--gold);font-size:26px}
+.thanks{font-family:var(--hf);font-weight:900;font-size:clamp(34px,6vw,86px);letter-spacing:-.04em;margin-top:40px;background:linear-gradient(90deg,var(--cs2),#fff,var(--ubs2));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* SOURCES */
+#src ol{list-style:none;counter-reset:s;display:grid;grid-template-columns:1fr 1fr;gap:12px 28px;margin-top:30px}
+#src li{counter-increment:s;padding:14px 18px 14px 58px;border-radius:16px;background:var(--card);border:1px solid var(--line);position:relative;font-size:14px;line-height:1.45;color:#c0c8df}
+#src li::before{content:counter(s);position:absolute;left:16px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;background:var(--gold);color:#1a1403;font-family:var(--hf);font-weight:700;font-size:12px;display:grid;place-items:center}
+#src a{color:var(--cs2);word-break:break-all;font-size:12px;text-decoration:none;display:block;opacity:.8}
+#src a:hover{opacity:1;text-decoration:underline}
+.note{margin-top:26px;font-size:13px;color:var(--mute)}
+
+@media (max-width:980px){
+  body{font-size:16px} section{padding:90px 6vw 70px}
+  .g3,.hugs,.pillars,.react,.res,.chartbox,.hier{grid-template-columns:1fr}
+  .duel{grid-template-columns:1fr}.duel .mid{transform:rotate(90deg);height:50px}
+  .tl::before,.tl::after{left:14px}
+  .ti{grid-template-columns:30px 1fr;gap:14px}
+  .ti .node{grid-column:1;grid-row:1;margin:0}
+  .ti.L .card,.ti.R .card{grid-column:2;grid-row:1;text-align:left}
+  .ti.L .eff{justify-content:flex-start}
+  .rrow{grid-template-columns:1fr}.rrow .ar{display:none}
+  .brow{grid-template-columns:1fr 70px}.brow .tr{grid-column:1/-1;order:3}
+  #src ol{grid-template-columns:1fr}
+  .weekend{flex-direction:column}.weekend div{border-right:0;border-bottom:1px solid var(--line)}
+  #dots,#hint,#cnt{display:none}
+  .extra,.verdict{flex-direction:column}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<!-- ICON SPRITE -->
+<svg width="0" height="0" style="position:absolute">
+<defs>
+  <symbol id="trend" viewBox="0 0 24 24"><path d="M3 7l6 6 4-4 8 8"/><path d="M15 17h6v-6"/></symbol>
+  <symbol id="flame" viewBox="0 0 24 24"><path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/></symbol>
+  <symbol id="split" viewBox="0 0 24 24"><path d="M12 21v-8M12 13L5 6M12 13l7-7M5 6v4M5 6h4M19 6v4M19 6h-4"/></symbol>
+  <symbol id="out" viewBox="0 0 24 24"><path d="M3 12h13M12 6l6 6-6 6"/><path d="M21 4v16"/></symbol>
+  <symbol id="user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></symbol>
+  <symbol id="bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+  <symbol id="bank" viewBox="0 0 24 24"><path d="M3 10l9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 20h18"/></symbol>
+  <symbol id="shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="scales" viewBox="0 0 24 24"><path d="M12 3v18M7 21h10M4 7h16M5 7l-3 7a3 3 0 0 0 6 0zM19 7l-3 7a3 3 0 0 0 6 0z"/></symbol>
+  <symbol id="globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+  <symbol id="clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="dollar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M14.5 9c-.5-1-1.5-1.5-2.5-1.5-1.5 0-2.5.8-2.5 2s1 1.7 2.5 2 2.5.8 2.5 2-1 2-2.5 2c-1 0-2-.5-2.5-1.5M12 6v1.5M12 16.5V18"/></symbol>
+  <symbol id="doc" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h7M9 17h7"/></symbol>
+  <symbol id="arrow" viewBox="0 0 24 24"><path d="M4 12h16M14 6l6 6-6 6"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></symbol>
+  <symbol id="x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5M16 4.8a3.5 3.5 0 0 1 0 6.4M18 14.8c2.4.6 4 2.2 4 5.2"/></symbol>
+  <symbol id="gavel" viewBox="0 0 24 24"><path d="M14 4l6 6-3 3-6-6zM11 7L3 15l3 3 8-8M4 21h9"/></symbol>
+  <symbol id="rocket" viewBox="0 0 24 24"><path d="M5 19c0-3 1-4 3-5M5 19c3 0 4-1 5-3M14 14c4-1 7-6 7-11-5 0-10 3-11 7M9 15l-1-4-4 1 3-5M9 15l4 1-1 4 5-3"/></symbol>
+  <symbol id="layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></symbol>
+  <linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3d8bff"/><stop offset="1" stop-color="#3fe0a5"/></linearGradient>
+</defs>
+</svg>
+
+<div id="bar"></div>
+<nav id="dots"></nav>
+<div id="cnt"><b id="cn">1</b> / 10</div>
+<div id="hint">Листайте колёсиком или стрелками ← → ↑ ↓</div>
+
+<!-- ============ 0. HERO ============ -->
+<section id="hero" data-name="Титул">
+  <div class="orbs"><div class="orb o1"></div><div class="orb o2"></div></div>
+  <div class="badge rv"><span class="dot"></span>19 марта 2023 · воскресенье · сделка века</div>
+  <h1 class="rv" style="--d:.15s"><span class="cs">CREDIT SUISSE</span><span class="x">И</span><span class="ubs">UBS</span></h1>
+  <p class="sub rv" style="--d:.3s">Слияние 2023 года: причины и влияние на мировые финансовые рынки</p>
+  <p class="who rv" style="--d:.45s">Выполнила <b>Сучок Мария</b></p>
+  <svg id="sky" preserveAspectRatio="none"></svg>
+  <div class="scrolldown"></div>
+</section>
+
+<!-- ============ 1. CONTEXT ============ -->
+<section id="ctx" data-name="Два гиганта">
+  <div class="wrap">
+    <div class="kicker rv">Пролог · контекст</div>
+    <h2 class="rv" style="--d:.1s">Два швейцарских <em>гиганта</em></h2>
+    <p class="lead rv" style="--d:.2s">Одна страна, два флагмана финансовой системы. Один из них в марте 2023 года перестал существовать как самостоятельный банк — за один уикенд.</p>
+
+    <div class="duel">
+      <div class="card cs-c rv l tilt">
+        <div class="yr" data-count="1856" data-sep="0">0</div>
+        <h3>Credit Suisse</h3>
+        <p>Основан в 1856 году. Входил в число 30 глобально системно значимых банков, активы ≈ 1,1 трлн USD (2021). <span class="src">7</span></p>
+      </div>
+      <div class="mid rv z" style="--d:.3s"><svg class="i" viewBox="0 0 24 24" style="width:1em;height:1em"><use href="#arrow"/></svg></div>
+      <div class="card ubs-c rv r tilt">
+        <div class="yr" data-count="1998" data-sep="0">0</div>
+        <h3>UBS</h3>
+        <p>Сам образован в 1998 году слиянием Union Bank of Switzerland и Swiss Bank Corporation. Покупатель с опытом «больших свадеб».</p>
+      </div>
+    </div>
+
+    <div class="mini">
+      <div class="rv" style="--d:.1s"><div class="big hl" data-count="167" data-sep="0">0</div>лет истории Credit Suisse к моменту сделки</div>
+      <div class="rv" style="--d:.2s"><div class="big blue">too big<br>to fail</div>«слишком велик, чтобы упасть» — ключ ко всей истории</div>
+      <div class="rv" style="--d:.3s"><div class="big red" data-count="48" data-sep="0">0</div>часов — примерно столько заняли переговоры и подписание</div>
+    </div>
+    <div class="extra rv"><span class="tag">ДОП. ИНФОРМАЦИЯ</span><p>Годы основания и «too big to fail» — общеизвестный контекст, добавлен автором презентации для понимания масштаба; «≈ 48 часов» — оценка, а не данные источников.</p></div>
+  </div>
+</section>
+
+<!-- ============ 2. CAUSES ============ -->
+<section id="causes" data-name="Причины кризиса">
+  <div class="wrap">
+    <div class="kicker rv">Часть 1 · Почему всё рухнуло</div>
+    <h2 class="rv" style="--d:.1s">Шесть трещин в <em>фундаменте</em></h2>
+    <p class="lead rv" style="--d:.2s">Не один внешний шок, а годы накопленных ошибок. Каждая из шести причин усиливала предыдущую.</p>
+
+    <div class="grid g3" style="margin-top:40px">
+      <div class="card cause tilt rv" style="--d:.0s"><span class="num">01</span><div class="ico r"><svg class="i"><use href="#flame"/></svg></div>
+        <div class="big red"><span data-count="1.6" data-dec="1">0</span> млрд CHF</div><h3>Потери 2021</h3>
+        <p>Крах Archegos Capital и Greensill Capital — крупные потери и убыток за год.</p><span class="src">3, 4</span></div>
+      <div class="card cause tilt rv" style="--d:.1s"><span class="num">02</span><div class="ico r"><svg class="i"><use href="#trend"/></svg></div>
+        <div class="big red"><span data-count="7.3" data-dec="1">0</span> млрд CHF</div><h3>Убыток 2022</h3>
+        <p>Второй по величине в истории банка — после 8,2 млрд CHF в 2008 году.</p><span class="src">3</span></div>
+      <div class="card cause tilt rv" style="--d:.2s"><span class="num">03</span><div class="ico v"><svg class="i"><use href="#split"/></svg></div>
+        <div class="big" style="color:var(--violet)">3 части</div><h3>Реструктуризация</h3>
+        <p>Октябрь 2022: инвестбанк делят на три подразделения, допэмиссия, сокращение расходов. Ожидается убыток и в 2023-м.</p><span class="src">4</span></div>
+      <div class="card cause tilt rv" style="--d:.0s"><span class="num">04</span><div class="ico b"><svg class="i"><use href="#out"/></svg></div>
+        <div class="big blue"><span data-count="110" data-dec="0">0</span> млрд CHF</div><h3>Отток клиентов</h3>
+        <p>4 кв. 2022: чистый отток активов после слухов о платежеспособности.</p><span class="src">3</span></div>
+      <div class="card cause tilt rv" style="--d:.1s"><span class="num">05</span><div class="ico g"><svg class="i"><use href="#gavel"/></svg></div>
+        <div class="big hl">Менеджмент</div><h3>Управление</h3>
+        <p>Комиссия PUK: вина прежде всего на менеджменте. Бонусы 2010–2022 превысили убытки банка.</p><span class="src">9</span></div>
+      <div class="card cause tilt rv" style="--d:.2s"><span class="num">06</span><div class="ico n"><svg class="i"><use href="#bolt"/></svg></div>
+        <div class="big grn">SVB · Signature</div><h3>Внешний триггер</h3>
+        <p>Кризис американских банков в марте 2023 усилил потерю доверия — искра на сухой траве.</p><span class="src">2, 7</span></div>
+    </div>
+
+    <div class="trust rv"><div class="row"><span>Доверие клиентов (иллюстрация)</span><span id="tpct">100%</span></div>
+      <div class="track"><div class="fill"></div></div></div>
+
+    <div class="verdict rv"><svg class="i"><use href="#bolt"/></svg><div><b>Вывод:</b> кризис Credit Suisse — прежде всего <span class="hl">кризис доверия</span>: накопленные ошибки управления привели к оттоку клиентов, а не к одному внешнему шоку. <span class="src">4, 9</span></div></div>
+    <div class="extra rv"><span class="tag">ДОП. АНАЛИЗ</span><p>Убыток вырос с 1,6 до 7,3 млрд CHF — это <b>в ≈ 4,6 раза</b> за год. Отток 110 млрд CHF за квартал — это <b>≈ 1,2 млрд CHF в день</b> (расчёт на ≈ 92 дня). Для банка любая такая скорость — это «набег вкладчиков» в замедленной съёмке.</p></div>
+  </div>
+</section>
+
+<!-- ============ 3. TIMELINE ============ -->
+<section id="time" data-name="Хронология">
+  <div class="wrap">
+    <div class="kicker rv">Часть 2 · Хронология</div>
+    <h2 class="rv" style="--d:.1s">От октября 2022 до <em>20 марта</em></h2>
+    <p class="lead rv" style="--d:.2s">Пять месяцев медленного падения и пять последних дней, которые решили всё.</p>
+
+    <div class="tl" id="tl">
+      <div class="ti L rv"><div class="card"><div class="d">ОКТ. 2022</div><p>Saudi National Bank покупает 9,8% акций (≈ 1,5 млрд USD). Объявлен план реструктуризации.</p><div class="eff blue"><svg class="i"><use href="#shield"/></svg>Попытка вернуть доверие</div><span class="src">4, 5</span></div><div class="node"></div></div>
+      <div class="ti R rv"><div class="card"><div class="d">4 КВ. 2022</div><p>Убыток за квартал — 1,4 млрд CHF; чистый отток клиентских активов.</p><div class="eff red"><svg class="i"><use href="#out"/></svg>−110 млрд CHF</div><span class="src">3</span></div><div class="node"></div></div>
+      <div class="ti L rv"><div class="card"><div class="d">ФЕВ. 2023</div><p>Итоги 2022 года: убыток 7,3 млрд CHF, прогноз убытка на 2023-й.</p><div class="eff red"><svg class="i"><use href="#trend"/></svg>Акции −15% за неделю</div><span class="src">4</span></div><div class="node"></div></div>
+      <div class="ti R crit rv"><div class="card"><div class="d">15 МАРТА</div><p>Глава Saudi National Bank исключает увеличение доли в банке.</p><div class="eff red"><svg class="i"><use href="#trend"/></svg>Акции −20%, исторический минимум</div><span class="src">5</span></div><div class="node"></div></div>
+      <div class="ti L rv"><div class="card"><div class="d">16 МАРТА</div><p>Доступ к линиям ликвидности до 50 млрд CHF. Федеральный совет издаёт чрезвычайный указ.</p><div class="eff blue"><svg class="i"><use href="#bank"/></svg>Поддержка государства</div><span class="src">1, 2</span></div><div class="node"></div></div>
+      <div class="ti R crit rv"><div class="card"><div class="d">19 МАРТА · ВС</div><p>Соглашение с UBS: 0,76 CHF за акцию (3 млрд CHF). Гарантия государства для SNB — до 100 млрд CHF.</p><div class="eff hl"><svg class="i"><use href="#doc"/></svg>Сделка без голосования акционеров</div><span class="src">1, 2</span></div><div class="node"></div></div>
+      <div class="ti L crit rv"><div class="card"><div class="d">20 МАРТА · ПН</div><p>Акции CS −62%, UBS −5% (премаркет). AT1 — около 1 цента за доллар. ЦБ вводят ежедневные долларовые операции.</p><div class="eff red"><svg class="i"><use href="#globe"/></svg>Реакция рынков</div><span class="src">6, 8</span></div><div class="node"></div></div>
+    </div>
+
+    <div class="chartbox">
+      <div class="card rv l" id="chart1">
+        <h3>Рыночная капитализация CS (схема)</h3>
+        <svg viewBox="0 0 560 250">
+          <defs><linearGradient id="fa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff2d3d" stop-opacity=".35"/><stop offset="1" stop-color="#ff2d3d" stop-opacity="0"/></linearGradient></defs>
+          <g stroke="#ffffff14"><path d="M40 40H540M40 100H540M40 160H540M40 220H540"/></g>
+          <g fill="#8f9bb8" font-size="12" font-family="Manrope"><text x="4" y="44">13 млрд</text><text x="10" y="164">8 млрд</text><text x="40" y="244">≈ полгода до 20 марта</text><text x="470" y="244">20 марта</text></g>
+          <path d="M40 46 C130 54 190 62 250 80 S360 120 400 138 S470 150 540 168 L540 220 L40 220Z" fill="url(#fa)"/>
+          <path class="path" d="M40 46 C130 54 190 62 250 80 S360 120 400 138 S470 150 540 168" fill="none" stroke="#ff4d5a" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="40" cy="46" r="6" fill="#7cc0ff"/><circle cx="540" cy="168" r="7" fill="#ff2d3d"/><circle class="pulse" cx="540" cy="168" r="7" fill="#ff2d3d"/>
+        </svg>
+        <span class="src">USD, 6 · ≈ 13 → 8 млрд USD</span>
+      </div>
+      <div class="card drops rv r">
+        <div class="drop"><div class="v">−15%</div><div class="t">акции за неделю после итогов 2022 года</div></div>
+        <div class="drop"><div class="v">−20%</div><div class="t">15 марта — после слов главы Saudi National Bank</div></div>
+        <div class="drop"><div class="v">−62%</div><div class="t">20 марта — первая торговая сессия после сделки</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. DEAL ============ -->
+<section id="deal" data-name="Условия сделки">
+  <div class="wrap">
+    <div class="kicker rv">Часть 3 · Воскресная сделка</div>
+    <h2 class="rv" style="--d:.1s">19 марта 2023: <em>цена</em> спасения</h2>
+    <p class="lead rv" style="--d:.2s">Банк с историей в 167 лет продан за уикенд. Правила пришлось <b>переписать на ходу</b>.</p>
+
+    <div class="hugs">
+      <div class="hug a rv" style="--d:0s"><div class="big hl"><span data-count="3">0</span><small>млрд CHF</small></div><h3>Цена всего Credit Suisse</h3><p>0,76 CHF за акцию — в акциях UBS. <span class="src">1</span></p></div>
+      <div class="hug b rv" style="--d:.12s"><div class="big blue"><span data-count="100">0</span><small>млрд CHF</small></div><h3>Гарантия государства</h3><p>для SNB; ещё 9 млрд CHF — защита UBS. <span class="src">1, 10</span></p></div>
+      <div class="hug c rv" style="--d:.24s"><div class="big red"><span data-count="16">0</span><small>млрд CHF</small></div><h3>AT1 списаны в ноль</h3><p>по решению регулятора FINMA. <span class="src">1, 6</span></p></div>
+    </div>
+
+    <div class="bubbles rv" id="bub">
+      <h3>Масштаб в одной картинке <span style="color:var(--mute);font-weight:300;font-size:14px">— площадь круга пропорциональна сумме, млрд CHF</span></h3>
+      <svg viewBox="0 0 720 350">
+        <line x1="10" y1="290" x2="710" y2="290" stroke="#ffffff22"/>
+        <g class="bub" style="transition-delay:.2s"><circle cx="150" cy="190" r="100" fill="rgba(61,139,255,.28)" stroke="#3d8bff" stroke-width="2"/><text x="150" y="186" text-anchor="middle" fill="#fff" font-family="Unbounded" font-weight="900" font-size="34">100</text><text x="150" y="212" text-anchor="middle" fill="#cfe3ff" font-size="13" font-family="Manrope">гарантия для SNB</text></g>
+        <g class="bub" style="transition-delay:.45s"><circle cx="340" cy="219" r="71" fill="rgba(124,192,255,.2)" stroke="#7cc0ff" stroke-width="2"/><text x="340" y="217" text-anchor="middle" fill="#fff" font-family="Unbounded" font-weight="900" font-size="28">50</text><text x="340" y="239" text-anchor="middle" fill="#cfe3ff" font-size="12" font-family="Manrope">линии ликвидности</text></g>
+        <g class="bub" style="transition-delay:.7s"><circle cx="470" cy="250" r="40" fill="rgba(255,45,61,.3)" stroke="#ff2d3d" stroke-width="2"/><text x="470" y="256" text-anchor="middle" fill="#fff" font-family="Unbounded" font-weight="900" font-size="22">16</text><text x="470" y="318" text-anchor="middle" fill="#ff8a8f" font-size="12" font-family="Manrope">AT1 → 0</text></g>
+        <g class="bub" style="transition-delay:.95s"><circle cx="560" cy="260" r="30" fill="rgba(167,139,250,.3)" stroke="#a78bfa" stroke-width="2"/><text x="560" y="266" text-anchor="middle" fill="#fff" font-family="Unbounded" font-weight="900" font-size="18">9</text><text x="560" y="318" text-anchor="middle" fill="#c9bcff" font-size="12" font-family="Manrope">защита UBS</text></g>
+        <g class="bub" style="transition-delay:1.2s"><circle cx="645" cy="273" r="17.3" fill="rgba(243,201,105,.4)" stroke="#f3c969" stroke-width="2"/><text x="645" y="278" text-anchor="middle" fill="#fff" font-family="Unbounded" font-weight="900" font-size="14">3</text><text x="645" y="318" text-anchor="middle" fill="#f3c969" font-size="12" font-family="Manrope">цена CS</text></g>
+      </svg>
+    </div>
+
+    <div class="grid g3" style="margin-top:30px">
+      <div class="card rv tilt" style="--d:0s"><div class="ico g"><svg class="i"><use href="#doc"/></svg></div><h3>Чрезвычайный указ</h3><p style="font-size:15px;color:#b9c2db">Ст. 184–185 Конституции. Ст. 10a: слияние без одобрения акционеров, без отчёта о слиянии и аудита.</p><div class="eff hl" style="font-weight:700;margin-top:10px">→ Сделка за выходные</div></div>
+      <div class="card rv tilt" style="--d:.1s"><div class="ico r"><svg class="i"><use href="#scales"/></svg></div><h3>Решение FINMA по AT1</h3><p style="font-size:15px;color:#b9c2db">Полное списание номинала; bail-in прочих кредиторов не применялся.</p><div class="eff red" style="font-weight:700;margin-top:10px">→ ≈ 16 млрд CHF в ноль</div></div>
+      <div class="card rv tilt" style="--d:.2s"><div class="ico b"><svg class="i"><use href="#shield"/></svg></div><h3>Поддержка государства</h3><p style="font-size:15px;color:#b9c2db">Ликвидность SNB до 50 млрд CHF, гарантия 100 млрд CHF, защита UBS 9 млрд CHF.</p><div class="eff blue" style="font-weight:700;margin-top:10px">→ Риски на государстве</div></div>
+    </div>
+
+    <div class="hier">
+      <div class="card ok rv l"><div class="mark"><svg class="i"><use href="#check"/></svg></div><div><b>Акционеры</b><span>получили выплату — 0,76 CHF за акцию</span></div></div>
+      <div class="card no rv r"><div class="mark"><svg class="i"><use href="#x"/></svg></div><div><b>Держатели AT1</b><span>получили ноль — вопреки привычной иерархии требований</span></div></div>
+    </div>
+
+    <div class="verdict rv"><svg class="i"><use href="#scales"/></svg><div><b>Вывод:</b> закон о слияниях обошли ради скорости, а потери распределили вопреки привычной иерархии. <span class="src">2, 10</span></div></div>
+    <div class="extra rv"><span class="tag">ДОП. АНАЛИЗ</span><p>Цена сделки — ≈ 40% капитализации банка в пятницу (≈ 8 млрд USD). А вот списанные AT1 (16 млрд CHF) — <b>в ≈ 5,3 раза больше</b>, чем UBS заплатил за все акции. Суммарный потолок поддержки (50 + 100 + 9 = <b>159 млрд CHF</b>) — это <b>≈ 53 цены покупки</b>. Это максимумы, а не фактические выплаты, и инструменты разные — но порядок рисков наглядный.</p></div>
+  </div>
+</section>
+
+<!-- ============ 5. WHY ============ -->
+<section id="why" data-name="Почему слияние">
+  <div class="wrap">
+    <div class="kicker rv">Часть 4 · Логика решения</div>
+    <h2 class="rv" style="--d:.1s">Почему именно <em>слияние</em>?</h2>
+    <p class="lead rv" style="--d:.2s">Банкротство или bail-in были бы медленнее и опаснее. Три довода властей.</p>
+
+    <div class="pillars">
+      <div class="pillar rv tilt" style="--d:0s"><span class="n">1</span>
+        <div class="ico r"><svg class="i"><use href="#layers"/></svg></div>
+        <h3>Системная значимость</h3>
+        <p>Один из 30 глобально системно значимых банков (активы ≈ 1,1 трлн USD). Банкротство в разгар кризиса банков США грозило цепной реакцией; по выводу PUK, власти предотвратили глобальный кризис.</p>
+        <div class="chips"><span>CET1</span><span>LCR</span></div><span class="src">7, 9</span></div>
+      <div class="pillar rv tilt" style="--d:.15s"><span class="n">2</span>
+        <div class="ico b"><svg class="i"><use href="#people"/></svg></div>
+        <h3>Кризис доверия, а не показателя</h3>
+        <p>Главное — отток 110 млрд CHF за квартал и обвал акций: капитализация упала с ≈ 13 до ≈ 8 млрд USD за полгода. Ответ: линии SNB, затем сделка с UBS под гарантии государства.</p>
+        <div class="chips"><span>CDS банка</span></div><span class="src">2, 3, 6</span></div>
+      <div class="pillar rv tilt" style="--d:.3s"><span class="n">3</span>
+        <div class="ico g"><svg class="i"><use href="#clock"/></svg></div>
+        <h3>Скорость вместо процедуры</h3>
+        <p>Чрезвычайные полномочия: ст. 10a отменила голосование акционеров и ряд процедур. Банкротство и bail-in не применялись: FINMA заявила, что полномочия по резолюции не использовала.</p>
+        <div class="chips"><span>оценки альтернатив</span></div><span class="src">1, 2</span></div>
+    </div>
+
+    <div class="extra rv"><span class="tag">ДОП. АНАЛИЗ</span><p>Логика «слияние вместо резолюции» — это <b>обмен скорости на легитимность</b>: решение приняли за один уикенд, но ценой судебных споров (о них — в последней части) и роста концентрации: UBS стал крупнее и «ещё более too big to fail».</p></div>
+  </div>
+</section>
+
+<!-- ============ 6. REACTION ============ -->
+<section id="react" data-name="Реакция рынков">
+  <div class="wrap">
+    <div class="kicker rv">Часть 5 · Влияние на мировые рынки</div>
+    <h2 class="rv" style="--d:.1s">Волна по <em>всему миру</em></h2>
+    <p class="lead rv" style="--d:.2s">Пять каналов передачи — и один общий ответ центробанков.</p>
+
+    <div class="react">
+      <div class="card flow rv l">
+        <h3 style="text-align:center">Долларовая «страховочная сетка» ЦБ (с 20 марта) <span class="src">8</span></h3>
+        <svg viewBox="0 0 500 420">
+          <g stroke="#f3c969" stroke-width="2" fill="none" class="dash" opacity=".85">
+            <line x1="250" y1="210" x2="250" y2="82"/><line x1="250" y1="210" x2="375" y2="168"/><line x1="250" y1="210" x2="330" y2="312"/><line x1="250" y1="210" x2="170" y2="312"/><line x1="250" y1="210" x2="125" y2="168"/>
+          </g>
+          <circle class="pulse" cx="250" cy="210" r="46" fill="#f3c969" opacity=".4"/>
+          <circle cx="250" cy="210" r="46" fill="#1d1a0c" stroke="#f3c969" stroke-width="3"/>
+          <text x="250" y="206" text-anchor="middle" fill="#f3c969" font-family="Unbounded" font-weight="900" font-size="20">Fed</text>
+          <text x="250" y="226" text-anchor="middle" fill="#f3c969" font-size="12" font-family="Manrope">USD</text>
+          <g font-family="Unbounded" font-weight="700" font-size="14" text-anchor="middle">
+            <g><circle cx="250" cy="52" r="34" fill="#0d1d3b" stroke="#3d8bff" stroke-width="2.5"/><text x="250" y="57" fill="#7cc0ff">ЕЦБ</text></g>
+            <g><circle cx="402" cy="160" r="34" fill="#0d1d3b" stroke="#3d8bff" stroke-width="2.5"/><text x="402" y="165" fill="#7cc0ff">BoE</text></g>
+            <g><circle cx="344" cy="340" r="34" fill="#0d1d3b" stroke="#3d8bff" stroke-width="2.5"/><text x="344" y="345" fill="#7cc0ff">BoJ</text></g>
+            <g><circle cx="156" cy="340" r="34" fill="#0d1d3b" stroke="#3d8bff" stroke-width="2.5"/><text x="156" y="345" fill="#7cc0ff">BoC</text></g>
+            <g><circle cx="98" cy="160" r="34" fill="#2a0d12" stroke="#ff2d3d" stroke-width="2.5"/><text x="98" y="165" fill="#ff8a8f">SNB</text></g>
+          </g>
+          <text x="250" y="402" text-anchor="middle" fill="#8f9bb8" font-size="13" font-family="Manrope">ежедневные 7-дневные долларовые операции</text>
+        </svg>
+      </div>
+
+      <div class="card rv r" style="padding:14px 26px">
+        <div class="chan"><div class="ico r"><svg class="i"><use href="#doc"/></svg></div><div><h3>Рынок AT1</h3><p>AT1 CS списаны в ноль при сохранении капитала акционеров; облигации — около 1 цента за доллар.</p><span class="m">≈ 16 млрд CHF · 1, 6</span></div></div>
+        <div class="chan"><div class="ico b"><svg class="i"><use href="#trend"/></svg></div><div><h3>Акции банков</h3><p>Европейский банковский индекс падал вслед за CS; после сделки снизились HSBC и Standard Chartered.</p><span class="m">CS −62% · UBS −5% · 6, 7</span></div></div>
+        <div class="chan"><div class="ico v"><svg class="i"><use href="#bank"/></svg></div><div><h3>Банки США</h3><p>Давление на региональные банки; First Republic получил помощь от JPMorgan, BofA и Wells Fargo.</p><span class="m">акции −50% при помощи 30 млрд USD · 7</span></div></div>
+        <div class="chan"><div class="ico g"><svg class="i"><use href="#dollar"/></svg></div><div><h3>Центробанки</h3><p>Fed, ЕЦБ, BoE, BoJ, BoC и SNB — ежедневные 7-дневные долларовые операции. Backstop ликвидности.</p><span class="m">с 20 марта · 8</span></div></div>
+        <div class="chan"><div class="ico n"><svg class="i"><use href="#shield"/></svg></div><div><h3>Власти США</h3><p>Гарантированы вклады SVB и Signature; обсуждалась гарантия всех вкладов сверх 250 тыс. USD.</p><span class="m">сдерживание паники · 7</span></div></div>
+      </div>
+    </div>
+
+    <div class="card bars rv" id="barsbox">
+      <h3>Рыночная реакция, % <span class="src" style="margin:0 0 0 8px">6, 7</span></h3>
+      <div class="brow"><span>Credit Suisse, 20 марта</span><div class="tr"><div class="fl" data-w="62" style="background:linear-gradient(90deg,#ff7a3d,#ff2d3d)"></div></div><b class="red">−62%</b></div>
+      <div class="brow"><span>First Republic</span><div class="tr"><div class="fl" data-w="50" style="background:linear-gradient(90deg,#a78bfa,#ff2d3d)"></div></div><b class="red">−50%</b></div>
+      <div class="brow"><span>CS, до сделки (15 марта)</span><div class="tr"><div class="fl" data-w="20" style="background:#ff6a5a"></div></div><b class="red">−20%</b></div>
+      <div class="brow"><span>CS, неделя в феврале</span><div class="tr"><div class="fl" data-w="15" style="background:#ff8a5a"></div></div><b class="red">−15%</b></div>
+      <div class="brow"><span>UBS, 20 марта (премаркет)</span><div class="tr"><div class="fl" data-w="5" style="background:#ffb37a"></div></div><b class="red">−5%</b></div>
+    </div>
+
+    <div class="verdict rv"><svg class="i"><use href="#shield"/></svg><div><b>Вывод:</b> заражение удалось сдержать — аналитики не ждали системного краха, а главным спорным прецедентом стало <span class="hl">списание AT1</span>. <span class="src">7, 10</span></div></div>
+  </div>
+</section>
+
+<!-- ============ 7. RESULTS ============ -->
+<section id="results" data-name="Итоги 2023→2026">
+  <div class="wrap">
+    <div class="kicker rv">Часть 6 · Что стало потом</div>
+    <h2 class="rv" style="--d:.1s">Итоги: <em>2023 → 2026</em></h2>
+    <p class="lead rv" style="--d:.2s">Три с половиной года спустя: интеграция почти завершена, а споры — нет.</p>
+
+    <div class="res">
+      <div>
+        <div class="card rrow rv"><div class="th">Интеграция CS</div><div class="was">Сделка объявлена 19.03.2023</div><div class="ar"><svg class="i"><use href="#arrow"/></svg></div><div class="now">Миграция счетов завершена (март 2026); &gt; 90% старых приложений не используется <span class="src">11</span></div></div>
+        <div class="card rrow rv" style="--d:.05s"><div class="th">Экономия затрат</div><div class="was">Цель ≈ 13,5 млрд USD к концу 2026</div><div class="ar"><svg class="i"><use href="#arrow"/></svg></div><div class="now">Накоплено 12,6 млрд USD (≈ 93% цели) <span class="src">11</span></div></div>
+        <div class="card rrow rv" style="--d:.1s"><div class="th">Финансы UBS</div><div class="was">Покупка CS за 3 млрд CHF</div><div class="ar"><svg class="i"><use href="#arrow"/></svg></div><div class="now">Прибыль 1П26 — 5,84 млрд USD; CET1 — 14,4%; активы клиентов — 7,3 трлн USD <span class="src">11</span></div></div>
+        <div class="card rrow rv" style="--d:.15s"><div class="th">Капитал</div><div class="was">Проект: 100% капитала под иностранные дочерние</div><div class="ar"><svg class="i"><use href="#arrow"/></svg></div><div class="now">23.09.2026 верхняя палата: 90%; оценка SNB ≈ +16 млрд USD CET1 <span class="src">12</span></div></div>
+        <div class="card rrow rv" style="--d:.2s"><div class="th">Списание AT1</div><div class="was">Решение FINMA от 19.03.2023</div><div class="ar"><svg class="i"><use href="#arrow"/></svg></div><div class="now">Суд 01.10.2025 счёл списание незаконным; FINMA и UBS обжаловали, списание остаётся <span class="src">10, 13</span></div></div>
+        <div class="card rrow rv" style="--d:.25s"><div class="th">Вывод PUK</div><div class="was">Решения властей в марте 2023</div><div class="ar"><svg class="i"><use href="#arrow"/></svg></div><div class="now">Власти не вызвали кризис и предотвратили глобальный; 30 рекомендаций <span class="src">9</span></div></div>
+      </div>
+
+      <div class="side">
+        <div class="card rv r" id="ringcard">
+          <div class="ringbox">
+            <svg class="ring" viewBox="0 0 150 150"><circle class="bgc" cx="75" cy="75" r="54"/><circle class="fg" cx="75" cy="75" r="54"/><text x="75" y="86">93%</text></svg>
+            <div><h3>Экономия затрат</h3><p style="font-size:15px;color:#b9c2db">12,6 из 13,5 млрд USD. Осталось ≈ 0,9 млрд USD.</p></div>
+          </div>
+        </div>
+        <div class="stats3 rv r" style="--d:.1s">
+          <div class="card"><div class="big grn"><span data-count="5.84" data-dec="2">0</span></div><small>млрд USD прибыль 1П26</small></div>
+          <div class="card"><div class="big blue"><span data-count="14.4" data-dec="1">0</span>%</div><small>коэффициент CET1</small></div>
+          <div class="card"><div class="big hl"><span data-count="7.3" data-dec="1">0</span></div><small>трлн USD активов клиентов</small></div>
+        </div>
+        <div class="card rv r" style="--d:.2s">
+          <h3>Капитал под иностранные дочерние</h3>
+          <div class="cap" id="cap"></div>
+          <p style="font-size:14px;color:var(--mute);margin-top:10px">Законопроект: 100% → верхняя палата одобрила 90%</p>
+        </div>
+        <div class="card rv r" style="--d:.3s">
+          <h3>Судьба списания AT1</h3>
+          <div class="court">
+            <div><b>19.03.2023</b>FINMA списывает ≈ 16 млрд CHF</div>
+            <div><b>01.10.2025</b>Суд: списание незаконно</div>
+            <div><b>Далее</b>Обжалование FINMA и UBS → Федеральный верховный суд</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="verdict rv"><svg class="i"><use href="#rocket"/></svg><div><b>Вывод:</b> UBS стал единой группой с клиентскими активами ≈ 7,3 трлн USD; главный нерешённый вопрос — сколько капитала держать под иностранные дочерние компании. <span class="src">11, 12</span></div></div>
+  </div>
+</section>
+
+<!-- ============ 8. CONCLUSIONS ============ -->
+<section id="concl" data-name="Выводы">
+  <div class="wrap concl">
+    <div class="kicker rv">Часть 7 · Выводы</div>
+    <h2 class="rv" style="--d:.1s">Что мы <em>понимаем</em> сегодня</h2>
+
+    <div class="grid g3" style="margin-top:36px">
+      <div class="card tilt rv" style="--d:0s"><div class="ico r"><svg class="i"><use href="#flame"/></svg></div><h3>Причины</h3>
+        <p>Итог накопленных ошибок управления и кризиса доверия: убытки 2021–2022, отток клиентов 110 млрд CHF за квартал, отказ инвестора наращивать долю. Триггером стали события в банках США.</p><span class="src">2, 3, 5, 9</span></div>
+      <div class="card tilt rv" style="--d:.12s"><div class="ico b"><svg class="i"><use href="#globe"/></svg></div><h3>Влияние на рынки</h3>
+        <p>Заражение сдержали скоординированные меры SNB, Fed и других ЦБ. Но остались спорные прецеденты: AT1 списаны при выплате акционерам, а UBS стал ещё крупнее.</p><span class="src">6, 7, 8</span></div>
+      <div class="card tilt rv" style="--d:.24s"><div class="ico g"><svg class="i"><use href="#scales"/></svg></div><h3>Уроки и неопределённость</h3>
+        <p>PUK дала 30 рекомендаций; парламент решает, сколько капитала держать под иностранные дочерние UBS — 90% или 100%; законность списания AT1 проверяет Федеральный верховный суд.</p><span class="src">9, 12, 13</span></div>
+    </div>
+
+    <div class="finale">
+      <div class="path3 rv"><span class="red">Кризис доверия</span><svg class="i"><use href="#arrow"/></svg><span class="hl">Уикенд решений</span><svg class="i"><use href="#arrow"/></svg><span class="blue">Единый UBS</span><svg class="i"><use href="#arrow"/></svg><span class="grn">Открытые вопросы</span></div>
+      <div class="thanks rv" style="--d:.2s">Спасибо за внимание</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. SOURCES ============ -->
+<section id="src" data-name="Источники">
+  <div class="wrap">
+    <div class="kicker rv">Приложение</div>
+    <h2 class="rv" style="--d:.1s">Список <em>литературы</em></h2>
+    <ol>
+      <li class="rv">Lenz &amp; Staehelin. Acquisition of Credit Suisse by UBS (2023)<a href="https://www.lenzstaehelin.com/fr/news-insights/browse-thought-leadership-insights/insights-detail/acquisition-of-credit-suisse-by-ubs/" target="_blank" rel="noopener">lenzstaehelin.com/…/acquisition-of-credit-suisse-by-ubs/</a></li>
+      <li class="rv">Mondaq. Acquisition of Credit Suisse by UBS (2023)<a href="https://mondaq.com/insolvencybankruptcy/1298720/acquisition-of-credit-suisse-by-ubs" target="_blank" rel="noopener">mondaq.com/insolvencybankruptcy/1298720/…</a></li>
+      <li class="rv">SRF. Credit Suisse schreibt Jahresverlust von 7,3 Milliarden<a href="https://www.srf.ch/news/wirtschaft/grossbank-in-der-krise-credit-suisse-schreibt-jahresverlust-von-7-3-milliarden" target="_blank" rel="noopener">srf.ch/news/wirtschaft/grossbank-in-der-krise-…</a></li>
+      <li class="rv">The Motley Fool. Why shares of Credit Suisse are plunging this week (10.02.2023)<a href="https://www.fool.com/investing/2023/02/10/why-shares-of-credit-suisse-are-plunging-this-week" target="_blank" rel="noopener">fool.com/investing/2023/02/10/…</a></li>
+      <li class="rv">Al-Monitor. Saudi National Bank will not increase stake in Credit Suisse (15.03.2023)<a href="https://www.al-monitor.com/originals/2023/03/saudi-national-bank-will-not-increase-stake-credit-suisse-after-shares-drop" target="_blank" rel="noopener">al-monitor.com/originals/2023/03/…</a></li>
+      <li class="rv">Free Malaysia Today. Investors dump Credit Suisse stock, bonds after UBS rescue (20.03.2023)<a href="https://www.freemalaysiatoday.com/category/business/2023/03/20/investors-dump-credit-suisse-stock-bonds-after-ubs-rescue" target="_blank" rel="noopener">freemalaysiatoday.com/…/investors-dump-credit-suisse-stock-bonds-after-ubs-rescue</a></li>
+      <li class="rv">Al Jazeera. Credit Suisse and SVB: Is global banking headed for crisis? (21.03.2023)<a href="https://www.aljazeera.com/economy/2023/3/21/credit-suisse-and-svb-is-global-banking-headed-for-crisis" target="_blank" rel="noopener">aljazeera.com/economy/2023/3/21/…</a></li>
+      <li class="rv">Federal Reserve. Press release, 19.03.2023<a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20230319a.htm" target="_blank" rel="noopener">federalreserve.gov/…/monetary20230319a.htm</a></li>
+      <li class="rv">Investing.com. Swiss inquiry castigates failings of Credit Suisse oversight (20.12.2024)<a href="https://investing.com/news/stock-market-news/swiss-inquiry-castigates-failings-of-credit-suisse-oversight-but-pins-most-blame-on-bosses-3783872" target="_blank" rel="noopener">investing.com/news/stock-market-news/swiss-inquiry-…</a></li>
+      <li class="rv">DLA Piper. Swiss court strikes down AT1 bond write-off (11.2025)<a href="https://www.dlapiper.com/en/insights/publications/2025/11/swiss-court-strikes-down-at1-bond-write-off" target="_blank" rel="noopener">dlapiper.com/…/swiss-court-strikes-down-at1-bond-write-off</a></li>
+      <li class="rv">UBS. 2Q26 media release<a href="https://www.ubs.com/content/dam/assets/cc/investor-relations/quarterlies/2026/2q26/2q26-media-release-en.pdf" target="_blank" rel="noopener">ubs.com/…/2q26-media-release-en.pdf</a></li>
+      <li class="rv">Swissinfo. SNB welcomes 90% UBS capital plan adopted by upper house (24.09.2026)<a href="https://www.swissinfo.ch/eng/snb-welcomes-90%25-ubs-capital-plan-adopted-by-upper-house/92112444" target="_blank" rel="noopener">swissinfo.ch/eng/snb-welcomes-90%-ubs-capital-plan-…</a></li>
+      <li class="rv">Mondaq. Credit Suisse AT1 bonds: Federal Supreme Court to review FINMA write-off<a href="https://www.mondaq.com/financial-services/1757722/credit-suisse-at1-bonds-federal-supreme-court-to-review-finma-write-off-video" target="_blank" rel="noopener">mondaq.com/financial-services/1757722/…</a></li>
+    </ol>
+    <p class="note">Страницы открыты 08.10.2026. Суммы даны в валюте источника, курс не применялся. Блоки «Доп. анализ» и «Доп. информация» — расчёты и контекст автора презентации, а не данные источников.</p>
+  </div>
+</section>
+
+<script>
+(function(){
+  const $ = (s,r=document)=>r.querySelector(s), $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+  const secs = $$('section');
+  const fmt = (n,d,sep)=> sep===false ? n.toFixed(d) : n.toLocaleString('ru-RU',{minimumFractionDigits:d,maximumFractionDigits:d});
+
+  /* skyline */
+  const sky = $('#sky'); sky.setAttribute('viewBox','0 0 1200 210');
+  let x=0, html='', seed=7; const rnd=()=> (seed=(seed*16807)%2147483647)/2147483647;
+  while(x<1200){ const w=30+rnd()*50, h=40+rnd()*150, y=210-h;
+    html+=`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#0b1226" stroke="#ffffff10"/>`;
+    for(let wy=y+10; wy<205; wy+=14) for(let wx=x+6; wx<x+w-8; wx+=11){
+      if(rnd()>.62) html+=`<rect class="wn" x="${wx}" y="${wy}" width="4" height="6" fill="${rnd()>.5?'#f3c969':'#7cc0ff'}" opacity=".7" style="animation:tw ${2+rnd()*4}s ${rnd()*3}s infinite alternate"/>`; }
+    x+=w+3; }
+  sky.innerHTML = html + '<style>@keyframes tw{from{opacity:.1}to{opacity:.9}}</style>';
+
+  /* nav dots */
+  const dots=$('#dots');
+  secs.forEach((s,i)=>{ const a=document.createElement('a'); a.href='#'+s.id; a.innerHTML='<span>'+s.dataset.name+'</span>'; a.onclick=e=>{e.preventDefault();s.scrollIntoView({behavior:'smooth'})}; dots.appendChild(a); });
+  const dotEls=$$('a',dots);
+
+  /* cap blocks */
+  const cap=$('#cap'); for(let i=0;i<10;i++){ const b=document.createElement('i'); b.style.transition='background .4s '+(i*0.12+.4)+'s'; cap.appendChild(b); }
+
+  /* counters */
+  function count(el){
+    const to=parseFloat(el.dataset.count), d=+(el.dataset.dec||0), sep=el.dataset.sep!=='0', dur=1800, t0=performance.now();
+    (function tick(t){ const p=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-p,3); el.textContent=fmt(to*e,d,sep); if(p<1) requestAnimationFrame(tick); else el.textContent=fmt(to,d,sep); })(t0);
+  }
+
+  /* reveal */
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(!e.isIntersecting) return; const el=e.target; el.classList.add('in');
+    $$('[data-count]',el).forEach(count); if(el.dataset.count) count(el);
+    io.unobserve(el);
+  }),{threshold:.18});
+  $$('.rv').forEach(el=>io.observe(el));
+
+  /* containers with own animation */
+  const own=(sel,fn)=>{ const el=$(sel); if(!el) return; new IntersectionObserver((es,o)=>es.forEach(e=>{ if(e.isIntersecting){ fn(el); o.disconnect(); }}),{threshold:.3}).observe(el); };
+  own('#chart1',el=>el.classList.add('in'));
+  own('#bub',el=>el.classList.add('in'));
+  own('#ringcard',el=>el.classList.add('in'));
+  own('.trust',el=>{ el.classList.add('in'); const p=$('#tpct'); const t0=performance.now()+400;
+    (function k(t){ const q=Math.min(1,Math.max(0,(t-t0)/3400)); p.textContent=Math.round(100-91*q)+'%'; if(q<1) requestAnimationFrame(k); })(performance.now()); });
+  own('#barsbox',el=>$$('.fl',el).forEach(f=>f.style.width=f.dataset.w+'%'));
+  own('#cap',el=>$$('i',el).forEach((b,i)=>{ if(i<9) b.classList.add('on'); }));
+
+  /* tilt */
+  $$('.tilt').forEach(c=>{
+    c.addEventListener('mousemove',e=>{ const r=c.getBoundingClientRect(), x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+      c.style.transform=`perspective(900px) rotateY(${x*9}deg) rotateX(${-y*9}deg) translateY(-4px)`; c.style.transition='transform .1s'; });
+    c.addEventListener('mouseleave',()=>{ c.style.transform=''; c.style.transition='transform .5s'; });
+  });
+
+  /* scroll: progress, active dot, timeline line, hero parallax */
+  const bar=$('#bar'), tl=$('#tl'), cn=$('#cn'), hint=$('#hint'), orbs=$('.orbs');
+  let cur=0;
+  function onScroll(){
+    const h=document.documentElement; const y=window.scrollY;
+    bar.style.width=(y/(h.scrollHeight-innerHeight)*100)+'%';
+    let idx=0; secs.forEach((s,i)=>{ if(s.getBoundingClientRect().top<innerHeight*.5) idx=i; });
+    cur=idx; dotEls.forEach((d,i)=>d.classList.toggle('on',i===idx)); cn.textContent=idx+1;
+    const r=tl.getBoundingClientRect(); tl.style.setProperty('--p',Math.min(1,Math.max(0,(innerHeight*.6-r.top)/r.height)));
+    hint.style.opacity = y>200 ? 0 : 1;
+    if(y<innerHeight) orbs.style.transform=`translateY(${y*.25}px)`;
+  }
+  addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  /* keyboard */
+  addEventListener('keydown',e=>{
+    const next=['ArrowDown','ArrowRight','PageDown'], prev=['ArrowUp','ArrowLeft','PageUp'];
+    if(next.includes(e.key)){ e.preventDefault(); secs[Math.min(secs.length-1,cur+1)].scrollIntoView({behavior:'smooth'}); }
+    else if(prev.includes(e.key)){ e.preventDefault(); secs[Math.max(0,cur-1)].scrollIntoView({behavior:'smooth'}); }
+    else if(e.key==='Home'){ secs[0].scrollIntoView({behavior:'smooth'}); }
+    else if(e.key==='End'){ secs[secs.length-1].scrollIntoView({behavior:'smooth'}); }
+  });
+})();
+</script>
+</body>
+</html>
